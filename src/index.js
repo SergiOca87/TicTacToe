@@ -1,3 +1,5 @@
+import './style.scss';
+
 //As little global code as possible!
 
 //Gameboard represents the tiles of the board
@@ -9,14 +11,14 @@ const Gameboard = (() => {
     const domBoard = document.querySelector('.board');
 
     //Select DOM board, render the Array to the DOM 
-    renderBoard = () => {
+    const renderBoard = () => {
       let count = 0;
         
         for(let item of gameboard) {
             domBoard.insertAdjacentHTML("beforeend",`<div class="board-tile" data-num="${count}">${item}</div>`);
-            count++
+            count++;
         }
-    }
+    };
 
     //The winning positions on the Board
     const winningCombos = [
@@ -30,8 +32,8 @@ const Gameboard = (() => {
       [6, 7, 8]
     ];
 
-    playerFactory = (playerName, playerNumber, playerSign, playerArr) => {
-      return { playerName, playerNumber, playerSign, playerArr }
+    const playerFactory = (playerName, playerNumber, playerSign, playerArr) => {
+      return { playerName, playerNumber, playerSign, playerArr };
     };
 
     //TODO - Finish it and create form
@@ -39,19 +41,19 @@ const Gameboard = (() => {
 
     let player = 0;
 
-    document.getElementById('playerForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    // document.querySelector('#playerForm').addEventListener('submit', function(e) {
+    //   e.preventDefault();
 
-      //get name value, pass it to playerFacotryName
-      const playerName = '';
+    //   //get name value, pass it to playerFacotryName
+    //   const playerName = '';
 
-      //Get sign value, pass it to playerFactorySign
-      const playerSign = '';
+    //   //Get sign value, pass it to playerFactorySign
+    //   const playerSign = '';
 
-      playerFactory(playerName, 1, playerSign, []);
+    //   playerFactory(playerName, 1, playerSign, []);
 
-      //after that, change player to 1, and don't allow more form submissions
-    });
+    //   //after that, change player to 1, and don't allow more form submissions
+    // });
 
 
     return {
@@ -60,7 +62,7 @@ const Gameboard = (() => {
         domBoard,
         winningCombos,
         playerFactory
-    }
+    };
 
 })();
 
@@ -70,8 +72,8 @@ const Gameboard = (() => {
 // };
 
 //Initiate the players, make a form to choose the signs?
-const player1 = playerFactory('player1', 1, 'X', []);
-const player2 = playerFactory('player2', 2, 'O', []);
+const player1 = Gameboard.playerFactory('player1', 1, 'X', []);
+const player2 = Gameboard.playerFactory('player2', 2, 'O', []);
 
 
 
@@ -88,7 +90,7 @@ const GameLogic = (( boardCtrl ) => {
       //Inspect the Array and check for winning combinations?
       //This should be 1 function
       if( e.target.classList.contains('board-tile') && turn === 0 && e.target.textContent === '' ) {
-        e.target.textContent = player1.playerSign
+        e.target.textContent = player1.playerSign;
 
         //Find the num of the clicked tile and add the playerSign to the Array
         boardCtrl.gameboard[ e.target.dataset.num ] = player1.playerSign;
@@ -100,7 +102,7 @@ const GameLogic = (( boardCtrl ) => {
         turn = 1;
 
       } else if( e.target.classList.contains('board-tile') && turn === 1 && e.target.textContent === '' ) {
-        e.target.textContent = player2.playerSign
+        e.target.textContent = player2.playerSign;
 
         boardCtrl.gameboard[ e.target.dataset.num ] = player2.playerSign;
 
@@ -108,7 +110,7 @@ const GameLogic = (( boardCtrl ) => {
 
         console.log( 'player2', playerHasWon( player1.playerArr ) );
 
-        turn = 0
+        turn = 0;
       }
 
     });
@@ -130,7 +132,7 @@ const GameLogic = (( boardCtrl ) => {
         }
       }
       return hasWon;
-    }
+    };
     //We pass in the GameBoard controller so that we can use it's returned methods but 
     //Doing it like this keeps the modules more independant.
 })( Gameboard );
@@ -140,4 +142,4 @@ const GameLogic = (( boardCtrl ) => {
 Gameboard.renderBoard();
 //Gameboard.markTile()
 
-console.log(Gameboard.gameboard);
+console.log("watching");
