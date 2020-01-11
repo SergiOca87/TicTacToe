@@ -1,14 +1,14 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/index.js',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: 'dist/',
   },
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-source-map',
   module: {
     rules: [
       {

@@ -5,6 +5,24 @@ const GameLogic = ((boardctrl) => {
   // Turn, changes from 0 to 1
   let turn = 0;
 
+  // Has the player won?
+  // Check possible combinations
+  const playerHasWon = (playerArr) => {
+    // const sorted = arr.sort();
+
+    // THis checks that the targetArr (Each of the winningCombos inner Arrays) matches with the numbers of the player Array
+    const hasWonCheck = (playerArr, targetArr) => targetArr.every((num) => playerArr.includes(num));
+    let hasWon = '';
+
+    for (const combo of boardctrl.winningCombos) {
+      // Need a final true or false
+      if (playerArr.length > 2 && hasWonCheck(playerArr, combo)) {
+        hasWon = hasWonCheck(playerArr, combo);
+      }
+    }
+    return hasWon;
+  };
+
   // Clicking on a tile, we pass in the turn to check which player did it
   boardctrl.domBoard.addEventListener('click', (e) => {
     // TODO:
@@ -24,6 +42,8 @@ const GameLogic = ((boardctrl) => {
 
       // Change the turn
       turn = 1;
+
+      console.log(playerHasWon( boardctrl.player1.playerArr) );
     } else if (e.target.classList.contains('board-tile') && turn === 1 && e.target.textContent === '') {
       e.target.textContent = boardctrl.player2.playerSign;
 
@@ -36,23 +56,7 @@ const GameLogic = ((boardctrl) => {
     }
   });
 
-  // Has the player won?
-  // Check possible combinations
-  const playerHasWon = (playerArr) => {
-    // const sorted = arr.sort();
-
-    // THis checks that the targetArr (Each of the winningCombos inner Arrays) matches with the numbers of the player Array
-    const hasWonCheck = (playerArr, targetArr) => targetArr.every((num) => playerArr.includes(num));
-    let hasWon = '';
-
-    for (const combo of boardctrl.winningCombos) {
-      // Need a final true or false
-      if (playerArr.length > 2 && hasWonCheck(playerArr, combo)) {
-        hasWon = hasWonCheck(playerArr, combo);
-      }
-    }
-    return hasWon;
-  };
+  
     // We pass in the boardctrl controller so that we can use it's returned methods but
     // Doing it like this keeps the modules more independant.
 })(Gameboard);
